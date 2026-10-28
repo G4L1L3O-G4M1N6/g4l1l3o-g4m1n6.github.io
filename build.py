@@ -50,8 +50,8 @@ def privacy(g):
 <p class="date">Effective date: {EFFECTIVE}</p>
 <h2>1. Overview</h2>
 <p>{n} ("the Game") is developed by Martin Suarez (G4L1L3O G4M1N6). This policy explains what data the Game handles, how it is used, and your choices.</p>
-<h2>2. Data stored on your device</h2>
-<ul><li><b>Save data:</b> game progress and settings, stored in a local file on your device. It is never sent to us.</li></ul>
+<h2>2. Data stored on your device and in your Apple account</h2>
+<ul><li><b>Save data:</b> game progress and settings, stored in a local file on your device. It is never sent to us.</li><li><b>iCloud sync (iOS):</b> if you are signed in to iCloud, a copy of your save is kept in your own iCloud account so progress carries over to your other devices and survives reinstalls. It is stored by Apple under your Apple Account; we cannot access it. You can turn this off in Settings → [your name] → iCloud.</li><li><b>Game Center (iOS):</b> if you use Game Center, your scores and achievements are sent to Apple's Game Center under your Game Center profile, as described in <a href="https://www.apple.com/legal/privacy/">Apple's Privacy Policy</a>.</li></ul>
 <h2>3. Data collected by third-party services</h2>
 <ul>
 <li><b>Google AdMob</b> (ads): may collect device identifiers, IP address, and ad interaction data to serve and measure ads. See <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>.</li>
@@ -87,7 +87,7 @@ def terms(g):
 <h2>2. License</h2><p>We grant you a limited, non-exclusive, non-transferable, revocable license to use the Game for personal, non-commercial entertainment on devices you own.</p>
 <h2>3. In-app purchases</h2><p>The Game offers {html.escape(g["iap"])}. Purchases are final except where required by law or by the policies of the Apple App Store or Google Play. Virtual items have no real-world value.</p>
 <h2>4. Conduct</h2><p>Do not modify, reverse-engineer, or decompile the Game, or tamper with save data or purchase verification.</p>
-<h2>5. Save data</h2><p>Progress is stored on your device. We are not responsible for progress lost through device failure, uninstalling, or data corruption.</p>
+<h2>5. Save data</h2><p>Progress is stored on your device and, where available, synced through your iCloud account. We are not responsible for progress lost through device failure, uninstalling, or data corruption.</p>
 <h2>6. Intellectual property</h2><p>The Game's content is owned by Martin Suarez or licensed from third-party creators (see the in-game Credits and Open-source licences screens).</p>
 <h2>7. Disclaimer</h2><p>The Game is provided "as is", without warranties of any kind.</p>
 <h2>8. Limitation of liability</h2><p>To the maximum extent permitted by law, we are not liable for indirect, incidental, special, consequential, or punitive damages arising from your use of the Game.</p>
