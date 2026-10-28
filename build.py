@@ -20,6 +20,7 @@ GAMES = [
     {"slug": "tumbleweed", "name": "Tumbleweed Golf", "iap": "an optional \"Remove Ads\" purchase"},
     {"slug": "gold-shaft", "name": "Gold Shaft: Idle Miner", "iap": "an optional \"Remove Ads\" purchase"},
     {"slug": "idle-rancher", "name": "Idle Rancher: Cozy Ranch", "iap": "an optional \"Remove Ads\" purchase"},
+    {"slug": "cattle-baron", "name": "Cattle Baron", "iap": "an optional \"Remove Ads\" purchase"},
 ]
 
 STYLE = """
