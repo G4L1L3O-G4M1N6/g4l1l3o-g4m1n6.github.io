@@ -10,7 +10,7 @@ Run: python3 build.py  (writes the HTML next to this file)
 import html, pathlib
 
 ROOT = pathlib.Path(__file__).parent
-CONTACT = "bkimartinsuarez@gmail.com"
+CONTACT = "support@galileogamestudio.com"
 EFFECTIVE = "October 28, 2026"
 
 GAMES = [
