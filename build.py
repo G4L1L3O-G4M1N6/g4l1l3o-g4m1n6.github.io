@@ -5,6 +5,7 @@ One privacy policy and one terms page per game, from the same template,
 so every app's store listing has a stable URL:
   https://g4l1l3o-g4m1n6.github.io/<slug>/privacy
   https://g4l1l3o-g4m1n6.github.io/<slug>/terms
+  https://g4l1l3o-g4m1n6.github.io/<slug>/support
 Run: python3 build.py  (writes the HTML next to this file)
 """
 import html, pathlib
@@ -14,10 +15,10 @@ CONTACT = "support@galileogamestudio.com"
 EFFECTIVE = "October 28, 2026"
 
 GAMES = [
-    {"slug": "texas-rodeo", "name": "Texas Rodeo", "iap": "optional in-app purchases including virtual currency (Belt Buckles), cosmetic items, boosts, and ad removal"},
+    {"slug": "texas-rodeo", "name": "Texas Rodeo", "cloud": False, "iap": "optional in-app purchases including virtual currency (Belt Buckles), cosmetic items, boosts, and ad removal"},
     {"slug": "eight-seconds", "name": "Eight Seconds: Bull Ride", "iap": "an optional \"Remove Ads\" purchase"},
     {"slug": "corral", "name": "Corral: Fence Puzzle", "iap": "an optional \"Remove Ads\" purchase"},
-    {"slug": "tumbleweed", "name": "Tumbleweed Golf", "iap": "an optional \"Remove Ads\" purchase"},
+    {"slug": "tumbleweed", "name": "Tumbleweed Golf", "cloud": False, "iap": "an optional \"Remove Ads\" purchase"},
     {"slug": "gold-shaft", "name": "Gold Shaft: Idle Miner", "iap": "an optional \"Remove Ads\" purchase and an optional \"Permanent x2 Income\" purchase"},
     {"slug": "idle-rancher", "name": "Idle Rancher: Cozy Ranch", "iap": "an optional \"Remove Ads\" purchase and an optional \"Permanent x2 Income\" purchase"},
     {"slug": "cattle-baron", "name": "Cattle Baron: Ranch Tycoon", "iap": "an optional \"Remove Ads\" purchase and an optional \"Permanent x2 Income\" purchase"},
@@ -95,6 +96,32 @@ def terms(g):
 """)
 
 
+def support(g):
+    n = html.escape(g["name"])
+    if g.get("cloud", True):
+        sync = ("<p>Yes. When you are signed in to iCloud on your devices, the Game keeps your save in sync through iCloud automatically; "
+                "if two devices disagree, the copy with more progress is kept. Game Center (leaderboards and achievements) is optional "
+                "and signs you in quietly; it never blocks play. Make sure every device uses the same Apple Account and that iCloud is "
+                "turned on in Settings &rarr; [your name] &rarr; iCloud.</p>")
+    else:
+        sync = ("<p>Not yet. Your progress is saved on this device only. Deleting the Game or moving to a new device without a "
+                "device backup starts a new game.</p>")
+    return page(f"{g['name']} — Support", f"""
+<h1>{n} — Support</h1>
+<p>Need help with {n}? Email <a href="mailto:{CONTACT}">{CONTACT}</a> and tell us your device model, iOS version and what happened. We usually reply within a few days.</p>
+<h2>How do I restore my purchases?</h2>
+<p>Open the Game's Settings and tap <b>Restore Purchases</b>, signed in with the same Apple Account you bought with. Purchases such as Remove Ads come back on every device that uses that account.</p>
+<h2>Does my progress sync between devices?</h2>
+{sync}
+<h2>How do I change my privacy choices?</h2>
+<p>Ads in the Game come from Google AdMob. Where the law requires it, the Game's Settings shows <b>Privacy choices</b>, where you can review or change your ad consent at any time. On iOS you can also allow or stop app tracking in Settings &rarr; Privacy &amp; Security &rarr; Tracking. See the <a href="/{g["slug"]}/privacy">Privacy Policy</a> for details.</p>
+<h2>How do I delete my data?</h2>
+<p>Deleting the Game removes its data from your device. If your save syncs through iCloud, that copy lives in your own iCloud account, not with us; resetting progress in the Game's Settings (where offered) also resets it. Game Center scores and achievements are managed by Apple in Settings &rarr; Game Center. We keep no data about you on our own servers, so there is nothing else to delete; if you have questions, email us.</p>
+<h2>Something else?</h2>
+<p>Email <a href="mailto:{CONTACT}">{CONTACT}</a>. You can also read the <a href="/{g["slug"]}/terms">Terms of Service</a>.</p>
+""")
+
+
 def main():
     items = []
     for g in GAMES:
@@ -102,8 +129,9 @@ def main():
         d.mkdir(exist_ok=True)
         (d / "privacy.html").write_text(privacy(g))
         (d / "terms.html").write_text(terms(g))
-        items.append(f'<li>{html.escape(g["name"])} — <a href="/{g["slug"]}/privacy">Privacy Policy</a> · <a href="/{g["slug"]}/terms">Terms</a></li>')
-    (ROOT / "index.html").write_text(page("G4L1L3O G4M1N6", "<h1>G4L1L3O G4M1N6</h1><p>Small games by Martin Suarez.</p><ul>" + "".join(items) + "</ul>"))
+        (d / "support.html").write_text(support(g))
+        items.append(f'<li>{html.escape(g["name"])} — <a href="/{g["slug"]}/privacy">Privacy Policy</a> · <a href="/{g["slug"]}/terms">Terms</a> · <a href="/{g["slug"]}/support">Support</a></li>')
+    (ROOT / "index.html").write_text(page("G4L1L3O G4M1N6", "<h1>G4L1L3O G4M1N6</h1><p>Small games by Martin Suarez. Questions? Email <a href=\"mailto:" + CONTACT + "\">" + CONTACT + "</a>.</p><ul>" + "".join(items) + "</ul>"))
     (ROOT / ".nojekyll").write_text("")
 
 
