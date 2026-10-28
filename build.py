@@ -18,10 +18,10 @@ GAMES = [
     {"slug": "eight-seconds", "name": "Eight Seconds: Bull Ride", "iap": "an optional \"Remove Ads\" purchase"},
     {"slug": "corral", "name": "Corral: Fence Puzzle", "iap": "an optional \"Remove Ads\" purchase"},
     {"slug": "tumbleweed", "name": "Tumbleweed Golf", "iap": "an optional \"Remove Ads\" purchase"},
-    {"slug": "gold-shaft", "name": "Gold Shaft: Idle Miner", "iap": "an optional \"Remove Ads\" purchase"},
-    {"slug": "idle-rancher", "name": "Idle Rancher: Cozy Ranch", "iap": "an optional \"Remove Ads\" purchase"},
-    {"slug": "cattle-baron", "name": "Cattle Baron", "iap": "an optional \"Remove Ads\" purchase"},
-    {"slug": "wildcatter", "name": "Wildcatter", "iap": "an optional \"Remove Ads\" purchase"},
+    {"slug": "gold-shaft", "name": "Gold Shaft: Idle Miner", "iap": "an optional \"Remove Ads\" purchase and an optional \"Permanent x2 Income\" purchase"},
+    {"slug": "idle-rancher", "name": "Idle Rancher: Cozy Ranch", "iap": "an optional \"Remove Ads\" purchase and an optional \"Permanent x2 Income\" purchase"},
+    {"slug": "cattle-baron", "name": "Cattle Baron: Ranch Tycoon", "iap": "an optional \"Remove Ads\" purchase and an optional \"Permanent x2 Income\" purchase"},
+    {"slug": "wildcatter", "name": "Wildcatter: Oil Tycoon", "iap": "an optional \"Remove Ads\" purchase and an optional \"Permanent x2 Income\" purchase"},
 ]
 
 STYLE = """
