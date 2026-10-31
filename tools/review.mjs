@@ -77,7 +77,12 @@ try{
     assert.equal(await evaluate('document.getElementById("feedback-result").hidden'),false);
     assert.equal(await evaluate('document.cookie'), '');
     assert.equal(await evaluate('localStorage.length'),0);
-    await shot('feedback');results.push({size,case:'language-and-local-feedback',passed:true});
+    await shot('feedback');
+    await click('[data-demo="corral"]');
+    assert.equal(await evaluate('document.querySelector("#feedback [name=game]").value'),'idle-rancher','switching demos cannot relabel existing feedback');
+    await evaluate('document.querySelector("#feedback [name=note]").dispatchEvent(new Event("input",{bubbles:true}))');
+    assert.equal(await evaluate('document.getElementById("feedback-result").hidden'),true,'edited answers cannot export a stale response');
+    results.push({size,case:'language-and-local-feedback',passed:true});
     await send('Target.closeTarget',{targetId});
     console.log(size+' five demo loads/restarts, language, local feedback and layout PASS');
   }

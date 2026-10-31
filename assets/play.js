@@ -6,6 +6,7 @@
   let lang = navigator.language.toLowerCase().startsWith('es') ? 'es' : 'en';
   let selected = 'corral';
   let feedback = '';
+  let feedbackDirty = false;
   const text = (en, es) => lang === 'es' ? es : en;
   function renderLanguage() {
     document.documentElement.lang = lang;
@@ -26,7 +27,7 @@
     document.getElementById('demo-icon').src = `/assets/games/${slug}/icon-160.webp`;
     document.querySelectorAll('[data-demo]').forEach(el => el.setAttribute('aria-pressed', String(el.dataset.demo === slug)));
     document.getElementById('restart').disabled = true;
-    document.querySelector('#feedback [name=game]').value = slug;
+    if (!feedbackDirty) document.querySelector('#feedback [name=game]').value = slug;
     history.replaceState(null, '', `#demo=${slug}`);
     renderLanguage();
   }
@@ -43,8 +44,25 @@
   player.addEventListener('click', event => { if (event.target.closest('#start')) start(); });
   document.getElementById('restart').addEventListener('click', start);
   document.getElementById('language').addEventListener('click', () => { lang = lang === 'en' ? 'es' : 'en'; renderLanguage(); });
+  const form = document.getElementById('feedback');
+  function edited() {
+    feedbackDirty = true;
+    feedback = '';
+    document.getElementById('feedback-result').hidden = true;
+    document.getElementById('feedback-status').textContent = '';
+  }
+  form.addEventListener('input', edited);
+  form.addEventListener('change', edited);
+  form.addEventListener('reset', () => {
+    feedbackDirty = false;
+    feedback = '';
+    document.getElementById('feedback-result').hidden = true;
+    document.getElementById('feedback-status').textContent = '';
+    setTimeout(() => { form.elements.game.value = selected; }, 0);
+  });
   document.getElementById('feedback').addEventListener('submit', event => {
     event.preventDefault();
+    feedbackDirty = true;
     const answers = Object.fromEntries(new FormData(event.currentTarget));
     feedback = JSON.stringify({schema: 1, preview: 'galileo-2026-10-30', language: lang, ...answers}, null, 2);
     document.getElementById('feedback-text').value = feedback;
