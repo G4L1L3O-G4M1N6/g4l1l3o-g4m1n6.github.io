@@ -1,0 +1,31 @@
+name: Website and playable hub review
+on:
+  push:
+    branches: ['feat/**', 'fix/**']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify demo catalog and local source
+        run: |
+          python3 -m py_compile build.py validation_hub.py
+          node --check assets/play.js
+          python3 tools/verify_hub.py
+      - name: Exercise four browser layouts
+        env:
+          CHROME: /usr/bin/google-chrome
+        run: node tools/review.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: website-hub-review
+          path: review-output/
+          retention-days: 7

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "kind": "accelerated-browser-previews",
+  "demos": {
+    "corral": {
+      "bytes": 145603,
+      "sha256": "628e222fac1a684e2967b10bd6b936d854ad0a65966aa499605bfcb799030295"
+    },
+    "eight-seconds": {
+      "bytes": 483884,
+      "sha256": "ebbb6b0caa60c909dce99f8a3447058baba0534acc83759a1bd7dd2b6f93d39a"
+    },
+    "gold-shaft": {
+      "bytes": 140824,
+      "sha256": "1a46a593a70ecf74cb208aa8bd10aa85ee8c1e5bbc99e971c8bbf049a7540cbd"
+    },
+    "tumbleweed": {
+      "bytes": 140797,
+      "sha256": "86b5e7d3432093a797b3fd3672cdae64f896c02e769e2370f1d01569d2c7f4ee"
+    },
+    "idle-rancher": {
+      "bytes": 152784,
+      "sha256": "c80bc922df2612fb29ae516546cbc1df8c0653aeba4729c75eefae13c116b9f3"
+    }
+  }
+}
