@@ -92,5 +92,5 @@ try{
 }catch(error){console.error('Browser problems:',JSON.stringify(problems));throw error;}finally{
   ws?.close();proc.kill();server.close();
   await new Promise(r=>{if(proc.exitCode!==null)return r();proc.once('exit',r);setTimeout(r,3000);});
-  fs.rmSync(profile,{recursive:true,force:true});
+  fs.rmSync(profile,{recursive:true,force:true,maxRetries:10,retryDelay:100});
 }
