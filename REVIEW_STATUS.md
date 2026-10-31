@@ -6,7 +6,9 @@ The five embedded HTML files are the exact current TestFlight review artifacts, 
 
 Existing feedback remains attributed to its original game when a visitor switches demos; editing answers invalidates any earlier prepared export.
 
-Local Chrome checks pass24 cases across360x800,430x932,768x1024 and1280x900: each demo starts/restarts, only one iframe exists, language switches, feedback is generated locally, and the page has no horizontal overflow, external requests or script exceptions. Screenshots are restricted to GitHub Actions; current branch CI will retain four-size captures and logs. These checks do not establish physical Safari/audio/accessibility approval or measured product demand.
+Local and CI Chrome checks pass 24 cases across 360×800, 430×932, 768×1024 and 1280×900: each demo starts/restarts, only one iframe exists, language switches, feedback is generated locally, and the page has no horizontal overflow, external requests or script exceptions. [CI run 41150043282](https://github.com/G4L1L3O-G4M1N6/g4l1l3o-g4m1n6.github.io/actions/runs/41150043282) passes at cd74f55. Its 28 screenshots are retained; chooser, running Corral and feedback states were visually inspected at all four sizes. Screenshots are restricted to GitHub Actions. These checks do not establish physical Safari/audio/accessibility approval or measured product demand.
+
+The two earlier CI runs passed their functional checks but failed while removing Chrome's temporary profile. Bounded filesystem retries fix that cleanup race; the successful run above includes it. No product assertion was removed.
 
 This branch is a review draft. Martin's revised creative approval is still pending; no ad spend is active. Existing game policy body text is unchanged in this branch (only shared navigation gains the demo link). The separately prepared age-aware policy drafts remain in `g4l1l3o-site-audience` and require matching audience/store/vendor review. This branch does not publish them or establish legal clearance.
 
