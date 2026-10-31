@@ -17,6 +17,7 @@ the existing file under assets/ is kept, so the build also works on a fresh clon
 Needs Pillow (pip install pillow).
 """
 import html, pathlib, random, datetime
+import validation_hub
 
 ROOT = pathlib.Path(__file__).parent
 WORKSPACE = ROOT.parent  # ~/Code/G4L1L3O-G4M1N6
@@ -48,8 +49,8 @@ GAMES = [
     {
         "slug": "eight-seconds", "name": "Eight Seconds: Bull Ride", "short": "Eight Seconds",
         "subtitle": "One-thumb rodeo. Hold on.",
-        "pitch": "Hold your thumb down, swipe with every buck, and try to last eight seconds on the bull. "
-                 "Perfect swipes build a streak and get the crowd roaring, and every eight seconds the bull gets meaner.",
+        "pitch": "Flick with each buck and try to last eight seconds on the bull. "
+                 "Earn stars and seconds through a campaign of rides, with tougher bulls and a daily challenge.",
         "features": ["One thumb and a few seconds a ride", "The Daily Bull: everyone rides the same bull today",
                      "Collect bulls and riders, and upgrade your gear from ranch plain to legendary gold",
                      "Plays offline"],
@@ -67,8 +68,8 @@ GAMES = [
         "subtitle": "Fence-building block puzzle",
         "pitch": "Drag fence pieces onto the pasture and close pens around the animals. "
                  "The bigger the herd you round up at once, the bigger the score. No timer, no rush, just one more move.",
-        "features": ["A new daily board, the same for everyone", "Fill your barn with every animal you pen",
-                     "Earn painted, stone and iron fences, and autumn and snowy pastures", "No timer and no Wi-Fi needed"],
+        "features": ["A campaign of fence puzzles and an endless Ranch Run", "Fill your barn with every animal you pen",
+                     "Earn painted, stone and iron fences, and autumn and snowy pastures", "Wandering animals, wolves and limited pieces change your next move"],
         "tags": ["Puzzle", "Block puzzle", "Relaxing"], "accent": "#4E8A3A",
         "icon": "corral/icon.png",
         "shots": [("first_launch/43_autoplay_2.png", "A pasture board with wooden fence pens around cows and sheep, score 360"),
@@ -358,6 +359,7 @@ def header(current=""):
     <a class="brand" href="/"><img src="/assets/mark-96.webp" width="40" height="40" alt=""><span>{STUDIO}</span></a>
     <nav aria-label="Main"><ul>
       {item("/#games", "Games", "games")}
+      {item("/play/", "Play demos", "play")}
       {item("/#studio", "Studio", "studio")}
       {item("/support/", "Support", "support")}
     </ul></nav>
@@ -435,7 +437,8 @@ def home():
     {SPARK}
     <h1 id="hero-title">Small games with a western heart.</h1>
     <p class="lede">{STUDIO} makes original, feel-good games for iPhone: rodeo rides, ranches, gold mines and oil fields you can play a minute at a time.</p>
-    <a class="button" href="#games">Meet the games</a>
+    <a class="button" href="/play/">Try a game now</a>
+    <a class="more" href="#games">Meet all seven games</a>
   </div>
   <div class="fence-wrap wrap">
     <ul class="fence" aria-label="Our games">{fence}</ul>
@@ -456,7 +459,7 @@ def home():
     <div>
       <h2 id="studio-title">About the studio</h2>
       <p>{STUDIO} is Martin Suarez, making small mobile games that respect your time. Every game is original, from the rules to the art, and most are about the rodeo, the ranch and the old West.</p>
-      <p>They play offline, need no account and never make you wait on an energy timer. Ads keep them free, and one purchase in each game turns the between-screen ads off for good.</p>
+      <p>The games are designed for short sessions and local play. Free to play with optional purchases, they are being tested before public launch. Try the short browser previews and help shape the next version.</p>
     </div>
   </div>
 </section>
@@ -474,6 +477,7 @@ def home():
 
 
 def game_page(g):
+    demo = f'<a class="button" href="/play/#demo={g["slug"]}">Try the browser demo</a>' if g["slug"] in validation_hub.SLUGS else ""
     tags = "".join(f"<li>{e(t)}</li>" for t in g["tags"])
     feats = "".join(f"<li>{e(f)}</li>" for f in g["features"])
     gallery = "".join(f"<li>{shot_img(g, i, alt, lazy=i > 2)}</li>" for i, (_, alt) in enumerate(g["shots"], 1))
@@ -488,6 +492,7 @@ def game_page(g):
       <p class="subtitle">{e(g["subtitle"])}</p>
       <p class="pitch">{e(g["pitch"])}</p>
       <ul class="tags" aria-label="Genre">{tags}</ul>
+      {demo}
       {badge(g)}
     </div>
   </div>
@@ -678,7 +683,12 @@ def main():
     import hashlib
     VERSION = hashlib.sha1(css).hexdigest()[:8]
     build_images()
-    urls = ["/", "/support/"]
+    urls = ["/", "/support/", "/play/"]
+    playground = validation_hub.build(ROOT, LISTED)
+    page = doc("Play Galileo games in your browser", "Try five short game previews and share your feedback. No download or account needed.", "/play/", playground, current="play", body_class="play-page")
+    policy = "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self' data: blob:; frame-src 'self'; connect-src 'none'; base-uri 'self'; form-action 'none'\">"
+    page = page.replace('<meta charset="utf-8">', '<meta charset="utf-8">' + policy, 1)
+    (ROOT / "play/index.html").write_text(page)
     for g in GAMES:
         d = ROOT / g["slug"]
         d.mkdir(exist_ok=True)
